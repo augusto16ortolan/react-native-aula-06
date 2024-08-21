@@ -1,29 +1,30 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  ScrollView,
+  Image,
+  FlatList,
+} from "react-native";
+import { movies } from "./movies";
 
 export default function App() {
-  const [contador, setContador] = useState(0);
-
-  function somar() {
-    const novoValor = contador + 1;
-    setContador(novoValor);
-  }
-
-  function subtrair() {
-    const novoValor = contador - 1;
-    setContador(novoValor);
-  }
-
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={() => subtrair()}>
-        <Text style={styles.buttonText}>Diminuir</Text>
-      </TouchableOpacity>
-      <Text style={{ fontSize: 50 }}>{contador}</Text>
-      <TouchableOpacity style={styles.button} onPress={() => somar()}>
-        <Text style={styles.buttonText}>Somar</Text>
-      </TouchableOpacity>
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
+        <FlatList
+          data={movies}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <View style={styles.containerMovie}>
+              <Image source={{ uri: item.post }} />
+              <Text>{item.title}</Text>
+            </View>
+          )}
+        />
+      </ScrollView>
       <StatusBar style="auto" />
     </View>
   );
@@ -32,10 +33,25 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "row",
+    padding: 16,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "center",
+  },
+  scroll: {
+    flexGrow: 1,
+    width: "100%",
+  },
+  containerMovie: {
+    width: 343,
+    height: 180,
+    borderWidth: 0.2,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
+    marginBottom: 16,
   },
   button: {
     width: 100,
