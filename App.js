@@ -19,8 +19,18 @@ export default function App() {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <View style={styles.containerMovie}>
-              <Image source={{ uri: item.post }} />
-              <Text>{item.title}</Text>
+              <View style={styles.containerImage}>
+                <Image
+                  style={{ width: 120, height: 160, resizeMode: "cover" }}
+                  source={{
+                    uri: item.poster,
+                  }}
+                />
+              </View>
+              <View style={styles.containerInfo}>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.year}>{item.year}</Text>
+              </View>
             </View>
           )}
         />
@@ -43,7 +53,8 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   containerMovie: {
-    width: 343,
+    flexDirection: "row",
+    width: "100%",
     height: 180,
     borderWidth: 0.2,
     shadowColor: "#000",
@@ -52,6 +63,12 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
     marginBottom: 16,
+    alignItems: "center",
+    padding: 10,
+  },
+  containerInfo: {
+    marginLeft: 15,
+    width: "100%",
   },
   button: {
     width: 100,
@@ -65,5 +82,16 @@ const styles = StyleSheet.create({
     fontSize: 25,
     color: "white",
     fontWeight: "bold",
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+    resizeMode: "stretch",
+  },
+  year: {
+    fontSize: 14,
+    fontWeight: "400",
+    color: "#777",
   },
 });
